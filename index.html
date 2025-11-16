@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>恶魔轮盘 - 子弹追踪器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="container">
+        <header>
+            <h1>💀 恶魔轮盘助手</h1>
+            <button id="fullscreenToggle" class="fullscreen-btn">🔳 全屏</button>
+        </header>
+
+        <!-- 初始设置面板 -->
+        <div id="setupPanel" class="panel">
+            <div class="setup-tip">
+                ℹ️ 请选择游戏初始化真假弹数量
+            </div>
+            <h2>⚙️ 游戏设置</h2>
+            <div class="setup-form">
+                <div class="form-group">
+                    <label for="realBullets">真弹数量:</label>
+                    <div class="number-picker" id="realBulletsPicker">
+                        <button class="number-btn" data-value="1">1</button>
+                        <button class="number-btn" data-value="2">2</button>
+                        <button class="number-btn" data-value="3">3</button>
+                        <button class="number-btn" data-value="4">4</button>
+                        <button class="number-btn" data-value="5">5</button>
+                        <button class="number-btn" data-value="6">6</button>
+                        <button class="number-btn" data-value="7">7</button>
+                        <button class="number-btn" data-value="8">8</button>
+                        <button class="number-btn" data-value="9">9</button>
+                        <button class="number-btn" data-value="10">10</button>
+                    </div>
+                    <input type="hidden" id="realBullets" value="">
+                </div>
+                <div class="form-group">
+                    <label for="blankBullets">假弹数量:</label>
+                    <div class="number-picker" id="blankBulletsPicker">
+                        <button class="number-btn" data-value="1">1</button>
+                        <button class="number-btn" data-value="2">2</button>
+                        <button class="number-btn" data-value="3">3</button>
+                        <button class="number-btn" data-value="4">4</button>
+                        <button class="number-btn" data-value="5">5</button>
+                        <button class="number-btn" data-value="6">6</button>
+                        <button class="number-btn" data-value="7">7</button>
+                        <button class="number-btn" data-value="8">8</button>
+                        <button class="number-btn" data-value="9">9</button>
+                        <button class="number-btn" data-value="10">10</button>
+                    </div>
+                    <input type="hidden" id="blankBullets" value="">
+                </div>
+                <div class="form-group">
+                    <label for="totalBullets">总子弹数量:</label>
+                    <div class="total-display" id="totalBulletsDisplay">0</div>
+                </div>
+                <button id="startGame" class="btn btn-primary">
+                    ▶️ 开始游戏
+                </button>
+            </div>
+        </div>
+
+        <!-- 游戏主界面 -->
+        <div id="gamePanel" class="game-layout" style="display: none;">
+            <!-- 统计信息 -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon real">
+                        🔴
+                    </div>
+                    <div class="stat-info">
+                        <h3>剩余真弹</h3>
+                        <div class="stat-number" id="remainingReal">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blank">
+                        🔵
+                    </div>
+                    <div class="stat-info">
+                        <h3>剩余假弹</h3>
+                        <div class="stat-number" id="remainingBlank">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        📊
+                    </div>
+                    <div class="stat-info">
+                        <h3>总剩余</h3>
+                        <div class="stat-number" id="remainingTotal">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 弹舱可视化 -->
+            <div class="chamber-container">
+                <h3>🎯 弹舱状态</h3>
+                <div class="chamber" id="chamber">
+                    <!-- 动态生成子弹位置 -->
+                </div>
+            </div>
+
+            <!-- 主要内容区域 -->
+            <div class="main-content">
+                <!-- 概率分析区域 -->
+                <div class="probability-area">
+                    <!-- 压缩的总体和下一发概率 -->
+                    <div class="mini-probability">
+                        <div class="mini-prob-section">
+                            <h4>总体概率</h4>
+                            <div class="mini-overall-probability" id="overallProbability">
+                                <!-- 动态生成总体概率 -->
+                            </div>
+                        </div>
+                        <div class="mini-prob-section">
+                            <h4>下一发概率</h4>
+                            <div class="mini-next-probability" id="nextProbability">
+                                <!-- 动态生成下一发概率 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 剩余位置概率 -->
+                    <div class="probability-section">
+                        <h4>📋 剩余位置概率</h4>
+                        <div class="position-probability" id="positionProbability">
+                            <!-- 动态生成各位置概率 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧工具栏 -->
+                <div class="tools-area">
+                    <!-- 消耗子弹 -->
+                    <div class="action-section">
+                        <h4>➖ 消耗子弹</h4>
+                        <div id="nextBulletPreview" style="text-align: center; margin-bottom: 10px; font-weight: bold; color: #fff;">
+                            下一发：未知
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-danger" id="useRealBullet">
+                                🔴 射出真弹
+                            </button>
+                            <button class="btn btn-info" id="useBlankBullet">
+                                🔵 射出假弹
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 道具使用 -->
+                    <div class="action-section">
+                        <h4>🔧 道具使用</h4>
+                        <div class="tool-buttons">
+                            <button class="btn btn-tool" id="magnifier">
+                                🔍 放大镜
+                            </button>
+                            <button class="btn btn-tool" id="phone">
+                                📱 手机
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 重新开始 -->
+                    <div class="action-section">
+                        <button class="btn btn-warning" id="resetGame">
+                            🔄 重新开始
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 美化弹窗容器 -->
+        <div id="customModal" class="custom-modal" style="display: none;">
+            <div class="custom-modal-content">
+                <div class="custom-modal-header">
+                    <div class="custom-modal-title">
+                        <i class="custom-modal-icon"></i>
+                        <span id="customModalTitle">提示</span>
+                    </div>
+                    <button class="custom-modal-close" id="customModalClose">
+                        ❌
+                    </button>
+                </div>
+                <div class="custom-modal-body">
+                    <p id="customModalMessage">确定要执行此操作吗？</p>
+                </div>
+                <div class="custom-modal-footer">
+                    <button class="btn btn-secondary" id="customModalCancel">取消</button>
+                    <button class="btn btn-primary" id="customModalConfirm">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

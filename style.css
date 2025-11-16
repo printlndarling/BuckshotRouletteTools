@@ -1,0 +1,955 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 强制隐藏规则 */
+[style*="display: none"] {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+    height: 100vh;
+    color: #fff;
+    overflow: hidden;
+}
+
+
+/* 桌面端优化 */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1400px;
+        padding: 20px;
+    }
+
+    .main-content {
+        grid-template-columns: 1fr 320px;
+        gap: 20px;
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .chamber-container {
+        margin-bottom: 15px;
+    }
+
+    .probability-area {
+        padding: 25px;
+        gap: 20px;
+    }
+
+    .tools-area {
+        gap: 20px;
+    }
+
+    .action-section {
+        padding: 20px;
+    }
+
+    .bullet-slot {
+        width: 60px;
+        height: 60px;
+        font-size: 1.3rem;
+    }
+
+    .game-layout {
+        gap: 15px;
+    }
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 头部样式 */
+header {
+    text-align: center;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%);
+    padding: 10px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(255, 68, 68, 0.3);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    flex: 1;
+}
+
+/* 全屏按钮 */
+.fullscreen-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+.fullscreen-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* 设置提示 */
+.setup-tip {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #ff4444;
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.5s ease;
+}
+
+.setup-tip i {
+    color: #ff4444;
+    font-size: 1.2rem;
+}
+
+/* 面板样式 */
+.panel {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex: 1;
+    overflow-y: auto;
+}
+
+#setupPanel {
+    flex: none;
+    overflow: visible;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 游戏布局 */
+.game-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+}
+
+/* 滚动条样式 */
+.left-panel::-webkit-scrollbar,
+.right-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.left-panel::-webkit-scrollbar-track,
+.right-panel::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.left-panel::-webkit-scrollbar-thumb,
+.right-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.left-panel::-webkit-scrollbar-thumb:hover,
+.right-panel::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.panel h2 {
+    margin-bottom: 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.8rem;
+}
+
+.panel h3 {
+    margin-bottom: 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.4rem;
+}
+
+.panel h4 {
+    margin-bottom: 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+}
+
+/* 统计信息 */
+.stats-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+/* 弹舱可视化 */
+.chamber-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 2px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* 主要内容区域 */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 12px;
+    flex: 1;
+    min-height: 0;
+}
+
+/* 概率分析区域 */
+.probability-area {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* 右侧工具栏 */
+.tools-area {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+.action-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 压缩的概率显示 */
+.mini-probability {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.mini-prob-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mini-prob-section h4 {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 设置表单 */
+.setup-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* 数字选择器 */
+.number-picker {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.number-btn {
+    padding: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.number-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.number-btn.selected {
+    background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%);
+    border-color: #ff4444;
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1rem;
+}
+
+/* 隐藏的input框用于存储数值 */
+.form-group input[type="hidden"] {
+    display: none;
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #ff6666 0%, #ff8888 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 68, 68, 0.4);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+    min-width: 140px;
+    width: 150px;
+    justify-content: center;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #ff6666 0%, #ff8888 100%);
+    transform: translateY(-2px);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #4444ff 0%, #6666ff 100%);
+    color: white;
+    box-shadow: 0 5px 15px rgba(68, 68, 255, 0.3);
+    min-width: 140px;
+    width: 150px;
+    justify-content: center;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #6666ff 0%, #8888ff 100%);
+    transform: translateY(-2px);
+}
+
+.btn-tool {
+    background: linear-gradient(135deg, #44ff44 0%, #66ff66 100%);
+    color: #000;
+    box-shadow: 0 5px 15px rgba(68, 255, 68, 0.3);
+    min-width: 140px;
+    width: 140px;
+    justify-content: center;
+}
+
+.btn-tool:hover {
+    background: linear-gradient(135deg, #66ff66 0%, #88ff88 100%);
+    transform: translateY(-2px);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ff8800 0%, #ffaa00 100%);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #ffaa00 0%, #ffcc00 100%);
+    transform: translateY(-2px);
+}
+
+/* 禁用按钮样式 */
+.btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+.btn:disabled:hover {
+    transform: none !important;
+    box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3) !important;
+}
+
+/* 统计卡片 */
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.stat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.stat-icon.real {
+    background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%);
+    box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+}
+
+.stat-icon.blank {
+    background: linear-gradient(135deg, #4444ff 0%, #6666ff 100%);
+    box-shadow: 0 5px 15px rgba(68, 68, 255, 0.3);
+}
+
+.stat-icon.total {
+    background: linear-gradient(135deg, #888888 0%, #aaaaaa 100%);
+    box-shadow: 0 5px 15px rgba(136, 136, 136, 0.3);
+}
+
+.stat-number {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.chamber {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.bullet-slot {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.bullet-slot.unknown {
+    background: linear-gradient(135deg, #666666 0%, #888888 100%);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.bullet-slot.real {
+    background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%);
+    border-color: #ff4444;
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+}
+
+.bullet-slot.blank {
+    background: linear-gradient(135deg, #4444ff 0%, #6666ff 100%);
+    border-color: #4444ff;
+    box-shadow: 0 0 20px rgba(68, 68, 255, 0.5);
+}
+
+/* 已揭示但未消耗的子弹 */
+.bullet-slot.revealed-real {
+    background: linear-gradient(135deg, #ff8888 0%, #ffaaaa 100%);
+    border-color: #ff8888;
+    box-shadow: 0 0 20px rgba(255, 136, 136, 0.3);
+}
+
+.bullet-slot.revealed-blank {
+    background: linear-gradient(135deg, #8888ff 0%, #aaaaff 100%);
+    border-color: #8888ff;
+    box-shadow: 0 0 20px rgba(136, 136, 255, 0.3);
+}
+
+.bullet-slot.used {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
+    opacity: 0.3;
+}
+
+.bullet-slot .bullet-index {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: white;
+}
+
+/* 概率分析 */
+.probability-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.probability-section:last-child {
+    margin-bottom: 0;
+}
+
+.probability-section h4 {
+    margin-bottom: 15px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+}
+
+
+.overall-probability,
+.next-probability {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+}
+
+.overall-probability .probability-item,
+.next-probability .probability-item {
+    text-align: center;
+    min-width: 200px;
+}
+
+.position-probability {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.probability-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* 总数显示样式 */
+.total-display {
+    padding: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+}
+
+.probability-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.probability-card:hover {
+    transform: translateY(-3px);
+}
+
+.probability-card h4 {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.probability-bar {
+    height: 32px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.probability-fill {
+    height: 100%;
+    color: white;
+    font-weight: bold;
+    transition: width 0.5s ease;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.probability-text {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 2;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+/* 特殊处理0%的情况 */
+.probability-bar-zero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.probability-fill-zero {
+    background: transparent;
+    position: absolute;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+.probability-real {
+    background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%);
+}
+
+.probability-blank {
+    background: linear-gradient(135deg, #4444ff 0%, #6666ff 100%);
+}
+
+
+
+
+.action-buttons,
+.tool-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* 美化弹窗 */
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.custom-modal-content {
+    background: linear-gradient(135deg, #2d2d44 0%, #3d3d54 100%);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideUp 0.3s ease;
+}
+
+.custom-modal-header {
+    background: linear-gradient(135deg, #ff4444 0%, #ff6666 100%);
+    padding: 20px 25px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.custom-modal-icon {
+    font-size: 1.3rem;
+}
+
+.custom-modal-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.custom-modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.custom-modal-body {
+    padding: 25px;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.custom-modal-footer {
+    padding: 20px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
+    color: white;
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #868e96 0%, #a8b0b8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-input,
+.modal-select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3e%3cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.modal-input:focus,
+.modal-select:focus {
+    outline: none;
+    border-color: #ff4444;
+}
+
+.modal-select option {
+    background: #2d2d44;
+    color: white;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease;
+}
+
+.radio-label:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.radio-label input[type="radio"] {
+    width: 18px;
+    height: 18px;
+}
+
+
+
+
+
+
+
+
+
+
+/* 动画效果 */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+
+
